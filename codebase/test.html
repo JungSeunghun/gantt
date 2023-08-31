@@ -12,6 +12,92 @@
 </body>
 <script>
     gantt.config.date_format = "%Y-%m-%d %H:%i";
+
+    gantt.config.scales = [
+        {unit: "month", step: 1, format: "%Y년 %F"},
+        {unit: "week", step: 1, format: function (date) {
+            return "Week #" + gantt.date.getWeek(date);
+        }},
+        {unit: "day", step: 1, format: "%d일 (%D)", css: function(date) {
+        if(!gantt.isWorkTime({ date: date, unit: "day"})){
+                return "weekend"
+            }
+        }}
+    ];
+
+    gantt.i18n.setLocale({
+        date: {
+            month_full: ["1월", "2월", "3월", "4월", "5월", "6월", 
+                "7월", "8월", "9월", "10월", "11월", "12월"],
+            month_short: ["1월", "2월", "3월", "4월", "5월", "6월", 
+                "7월", "8월", "9월", "10월", "11월", "12월"],
+            day_full: ["월요일", "화요일", "수요일", "목요일", "금요일",
+                "토요일", "일요일"],
+            day_short: ["일", "월", "화", "수", "목", "금", "토"]
+        },
+        labels: {
+            new_task: "New task",
+            icon_save: "Save",
+            icon_cancel: "Cancel",
+            icon_details: "Details",
+            icon_edit: "Edit",
+            icon_delete: "Delete",
+            gantt_save_btn: "New Label",
+            gantt_cancel_btn: "New Label",
+            gantt_delete_btn: "New Label",
+            confirm_closing: "",// Your changes will be lost, are you sure?
+            confirm_deleting: "Task will be deleted permanently, are you sure?",
+            section_description: "Description",
+            section_time: "Time period",
+            section_type: "Type",
+    
+            /* grid columns */
+            column_wbs: "WBS",
+            column_text: "Task name",
+            column_start_date: "Start time",
+            column_duration: "Duration",
+            column_add: "",
+    
+            /* link confirmation */
+            link: "Link",
+            confirm_link_deleting: "will be deleted",
+            link_start: " (start)",
+            link_end: " (end)",
+    
+            type_task: "Task",
+            type_project: "Project",
+            type_milestone: "Milestone",
+    
+            minutes: "Minutes",
+            hours: "Hours",
+            days: "Days",
+            weeks: "Week",
+            months: "Months",
+            years: "Years",
+    
+            /* message popup */
+            message_ok: "OK",
+            message_cancel: "Cancel",
+    
+            /* constraints */
+            section_constraint: "Constraint",
+            constraint_type: "Constraint type",
+            constraint_date: "Constraint date",
+            asap: "As Soon As Possible",
+            alap: "As Late As Possible",
+            snet: "Start No Earlier Than",
+            snlt: "Start No Later Than",
+            fnet: "Finish No Earlier Than",
+            fnlt: "Finish No Later Than",
+            mso: "Must Start On",
+            mfo: "Must Finish On",
+    
+            /* resource control */
+            resources_filter_placeholder: "type to filter",
+            resources_filter_label: "hide empty"
+        }
+    });
+
     gantt.init("gantt_here");
     gantt.parse({
     data: [
@@ -35,5 +121,26 @@
         {id:3, source:5, target:6, type:"0"}
     ]
     });
+
+    gantt.attachEvent("onAfterTaskAdd", function(id,item){
+        var task = gantt.getTask(id);
+        console.log(task);
+    });
+    
+    gantt.attachEvent("onAfterTaskDrag", function(id,item){
+        var task = gantt.getTask(id);
+        console.log(task);
+    });
+    
+    gantt.attachEvent("onAfterTaskDelete", function(id,item){
+        var task = gantt.getTask(id);
+        console.log(task);
+    });  
+    
+    gantt.attachEvent("onAfterTaskMove", function(id,item){
+        var task = gantt.getTask(id);
+        console.log(task);
+    });
+
 </script>
 </html>
